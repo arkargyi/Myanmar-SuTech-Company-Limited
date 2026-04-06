@@ -242,10 +242,9 @@ export default {
       subtitle: "Certification",
       title: "Uncompromising Quality",
       desc: "Our facilities operate under strict Thai-management quality protocols. Every batch undergoes rigorous laboratory testing before dispatch.",
-      c1: "ISO 9001 Compliant",
+      c1: "ISO 22000:2018 (FSMS)",
       c2: "GMP Certified",
       c3: "Export Ready",
-      c4: "ISO 22000:2018 (FSMS)",
       c5: "Government-Recognized Licenses & Inspections"
     }
   },

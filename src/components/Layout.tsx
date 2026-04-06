@@ -40,7 +40,7 @@ export default function Layout() {
       <div className="bg-emerald-900 text-white/80 py-2 px-4 md:px-8 text-xs md:text-sm hidden md:flex justify-between items-center z-50 relative">
         <div className="flex items-center space-x-6">
           <span className="flex items-center"><MapPin className="w-4 h-4 mr-2 text-amber-500" /> {t("topbar.locations")}</span>
-          <span className="flex items-center"><Phone className="w-4 h-4 mr-2 text-amber-500" /> +95 1 234 5678</span>
+          <span className="flex items-center"><Phone className="w-4 h-4 mr-2 text-amber-500" /> +95 1 650 585</span>
         </div>
         <div className="flex items-center space-x-4">
           <span className="flex items-center"><Mail className="w-4 h-4 mr-2 text-amber-500" /> info@myanmarsutech.com</span>

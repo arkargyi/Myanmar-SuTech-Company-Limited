@@ -86,22 +86,22 @@ export default function Contact() {
             
             {/* Contact Info */}
             <div>
-              <SectionHeading subtitle={t("contact.info.subtitle")} title={t("contact.info.title")} />
+              <SectionHeading subtitle={t("Address to Contact")} title={t("Addresses")} />
               
               <div className="space-y-12">
                 <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
                   <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center">
                     <MapPin className="w-6 h-6 text-emerald-600 mr-3" />
-                    {t("contact.info.hqTitle")}
+                    {t("Contact Of Head Office,Yangon")}
                   </h3>
                   <p className="text-slate-600 leading-relaxed mb-6">
                     Room 207-208, Yadana Residance,<br />
                     9 Mile, Pyay Rd, Yangon, Myanmar.
                   </p>
                   <div className="space-y-3">
-                    <a href="tel:+9512345678" className="flex items-center text-slate-600 hover:text-emerald-700 transition-colors">
+                    <a href="tel:+95 1 650 585" className="flex items-center text-slate-600 hover:text-emerald-700 transition-colors">
                       <Phone className="w-5 h-5 mr-3 text-amber-500" />
-                      +95 1 234 5678
+                      +95 1 650 585
                     </a>
                     <a href="mailto:info@myanmarsutech.com" className="flex items-center text-slate-600 hover:text-emerald-700 transition-colors">
                       <Mail className="w-5 h-5 mr-3 text-amber-500" />
@@ -113,7 +113,7 @@ export default function Contact() {
                 <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
                   <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center">
                     <MapPin className="w-6 h-6 text-emerald-600 mr-3" />
-                    {t("contact.info.factoryTitle")}
+                    {t("Contact of Factory,Pyay")}
                   </h3>
                   <p className="text-slate-600 leading-relaxed">
                     Mya Ywar, Pyay Township,<br />
