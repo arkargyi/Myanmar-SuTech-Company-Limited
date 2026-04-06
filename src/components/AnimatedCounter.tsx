@@ -1,0 +1,35 @@
+import { useEffect, useState, useRef } from "react";
+import { motion, useInView, useSpring, useTransform } from "motion/react";
+
+interface AnimatedCounterProps {
+  value: number;
+  suffix?: string;
+  prefix?: string;
+  duration?: number;
+}
+
+export default function AnimatedCounter({ value, suffix = "", prefix = "", duration = 2 }: AnimatedCounterProps) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  
+  const spring = useSpring(0, {
+    duration: duration * 1000,
+    bounce: 0,
+  });
+  
+  const display = useTransform(spring, (current) => Math.round(current).toLocaleString());
+
+  useEffect(() => {
+    if (isInView) {
+      spring.set(value);
+    }
+  }, [isInView, spring, value]);
+
+  return (
+    <span ref={ref} className="inline-flex items-center">
+      {prefix}
+      <motion.span>{display}</motion.span>
+      {suffix}
+    </span>
+  );
+}
