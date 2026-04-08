@@ -18,6 +18,7 @@ export default function Layout() {
     { name: t("nav.operations"), path: "/operations" },
     { name: t("nav.products"), path: "/products" },
     { name: t("nav.sustainability"), path: "/sustainability" },
+    { name: t("nav.news"), path: "/news" },
     { name: t("nav.contact"), path: "/contact" },
   ];
 
@@ -262,8 +263,8 @@ export default function Layout() {
               &copy; {new Date().getFullYear()} {t("footer.rights")}
             </p>
             <div className="flex space-x-6 text-xs text-emerald-400/60">
-              <Link to="#" className="hover:text-white transition-colors">{t("footer.privacy")}</Link>
-              <Link to="#" className="hover:text-white transition-colors">{t("footer.terms")}</Link>
+              <Link to="/privacy-policy" className="hover:text-white transition-colors">{t("footer.privacy")}</Link>
+              <Link to="/terms-of-service" className="hover:text-white transition-colors">{t("footer.terms")}</Link>
             </div>
           </div>
         </div>

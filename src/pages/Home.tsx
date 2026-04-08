@@ -212,6 +212,94 @@ export default function Home() {
       {/* Image Gallery Section */}
       <ImageGallery />
 
+      {/* Latest News Section */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="flex justify-between items-end mb-12">
+            <SectionHeading subtitle={t("news.heroTitle")} title={t("news.categories.all")} />
+            <Link to="/news" className="hidden md:flex items-center text-emerald-700 font-bold hover:text-amber-500 transition-colors">
+              {t("news.readMore")} <ArrowRight className="w-4 h-4 ml-2" />
+            </Link>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                id: 1,
+                title: t("news.articles.a1.title"),
+                excerpt: t("news.articles.a1.excerpt"),
+                date: t("news.articles.a1.date"),
+                category: t("news.articles.a1.category"),
+                image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop"
+              },
+              {
+                id: 2,
+                title: t("news.articles.a2.title"),
+                excerpt: t("news.articles.a2.excerpt"),
+                date: t("news.articles.a2.date"),
+                category: t("news.articles.a2.category"),
+                image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800&auto=format&fit=crop"
+              },
+              {
+                id: 3,
+                title: t("news.articles.a3.title"),
+                excerpt: t("news.articles.a3.excerpt"),
+                date: t("news.articles.a3.date"),
+                category: t("news.articles.a3.category"),
+                image: "https://images.unsplash.com/photo-1622484211148-7182928d11ce?q=80&w=800&auto=format&fit=crop"
+              }
+            ].map((article, index) => (
+              <motion.article
+                key={article.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="bg-slate-50 rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl hover:border-emerald-100 transition-all duration-300 group flex flex-col h-full"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={article.image} 
+                    alt={article.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-emerald-800 shadow-sm">
+                    {article.category}
+                  </div>
+                </div>
+                
+                <div className="p-6 flex flex-col flex-grow">
+                  <div className="flex items-center text-slate-500 text-xs mb-4 font-medium">
+                    <span className="w-4 h-4 mr-2 text-emerald-600">📅</span>
+                    {article.date}
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-emerald-700 transition-colors line-clamp-2">
+                    {article.title}
+                  </h3>
+                  
+                  <p className="text-slate-600 text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
+                    {article.excerpt}
+                  </p>
+                  
+                  <Link to="/news" state={{ articleId: article.id }} className="flex items-center text-emerald-700 font-semibold text-sm hover:text-emerald-800 transition-colors mt-auto group/btn">
+                    {t("news.readMore")}
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+          
+          <div className="mt-8 text-center md:hidden">
+            <Link to="/news" className="inline-flex items-center text-emerald-700 font-bold hover:text-amber-500 transition-colors">
+              {t("news.readMore")} <ArrowRight className="w-4 h-4 ml-2" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-24 bg-emerald-900 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">

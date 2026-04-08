@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import SectionHeading from "@/components/SectionHeading";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import VirtualTour from "@/components/VirtualTour";
 import { Settings, Cpu, Truck, ArrowRight, CheckCircle2, Globe } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 
@@ -33,6 +34,13 @@ export default function Operations() {
               {t("operations.heroDesc")}
             </p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Virtual Tour */}
+      <section className="py-12 bg-slate-900">
+        <div className="container mx-auto px-4 md:px-8">
+          <VirtualTour />
         </div>
       </section>
 
