@@ -25,7 +25,7 @@ export default function Breadcrumbs() {
     <nav className="flex items-center text-sm font-medium text-emerald-100/80 mb-6" aria-label="Breadcrumb">
       <ol className="flex items-center space-x-2">
         <li>
-          <Link to="/" className="hover:text-white transition-colors flex items-center">
+          <Link to="/" className="hover:text-white transition-colors flex items-center" aria-label="Home">
             <Home className="w-4 h-4 mr-1" />
             {t("nav.home")}
           </Link>
@@ -42,7 +42,7 @@ export default function Breadcrumbs() {
                   {getRouteName(value)}
                 </span>
               ) : (
-                <Link to={to} className="hover:text-white transition-colors ml-1">
+                <Link to={to} className="hover:text-white transition-colors ml-1" aria-label={`Go to ${getRouteName(value)}`}>
                   {getRouteName(value)}
                 </Link>
               )}

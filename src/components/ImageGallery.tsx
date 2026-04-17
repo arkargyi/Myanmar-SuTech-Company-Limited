@@ -7,7 +7,7 @@ import { useLanguage } from '@/lib/i18n';
 
 const images = [
   {
-    src: "https://i.imgur.com/cZpaH1E.png",
+    src: "https://i.imgur.com/pzznhYp.png",
     alt: "MSC Mill Section"
   },
   {
@@ -33,6 +33,7 @@ export default function ImageGallery() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 4000, stopOnInteraction: false })]);
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
@@ -50,47 +51,61 @@ export default function ImageGallery() {
     emblaApi.on('reInit', onSelect);
   }, [emblaApi, onSelect]);
 
+  // Simulate image gallery initialization/loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section className="py-24 bg-slate-50">
       <div className="container mx-auto px-4 md:px-8">
         <SectionHeading subtitle={t("home.gallery.subtitle")} title={t("home.gallery.title")} centered />
         
         <div className="relative mt-12 max-w-5xl mx-auto">
-          <div className="overflow-hidden rounded-2xl shadow-2xl" ref={emblaRef}>
-            <div className="flex">
-              {images.map((image, index) => (
-                <div className="flex-[0_0_100%] min-w-0 relative aspect-[16/9] md:aspect-[21/9]" key={index}>
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          {isLoading ? (
+            <div className="w-full aspect-[16/9] md:aspect-[21/9] rounded-2xl bg-slate-200 animate-pulse border border-slate-100 shadow-sm" />
+          ) : (
+            <>
+              <div className="overflow-hidden rounded-2xl shadow-2xl" ref={emblaRef}>
+                <div className="flex">
+                  {images.map((image, index) => (
+                    <div className="flex-[0_0_100%] min-w-0 relative aspect-[16/9] md:aspect-[21/9]" key={index}>
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
 
-          <button
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm shadow-lg flex items-center justify-center text-emerald-900 hover:bg-white transition-colors disabled:opacity-50 z-10"
-            onClick={scrollPrev}
-            disabled={!prevBtnEnabled}
-            aria-label="Previous slide"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-          
-          <button
-            className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm shadow-lg flex items-center justify-center text-emerald-900 hover:bg-white transition-colors disabled:opacity-50 z-10"
-            onClick={scrollNext}
-            disabled={!nextBtnEnabled}
-            aria-label="Next slide"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
+              <button
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm shadow-lg flex items-center justify-center text-emerald-900 hover:bg-white transition-colors disabled:opacity-50 z-10"
+                onClick={scrollPrev}
+                disabled={!prevBtnEnabled}
+                aria-label="Previous slide"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              
+              <button
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm shadow-lg flex items-center justify-center text-emerald-900 hover:bg-white transition-colors disabled:opacity-50 z-10"
+                onClick={scrollNext}
+                disabled={!nextBtnEnabled}
+                aria-label="Next slide"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </>
+          )}
         </div>
       </div>
     </section>

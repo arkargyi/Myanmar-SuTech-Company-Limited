@@ -37,9 +37,11 @@ export default function Sustainability() {
       </section>
 
       {/* Core Initiatives */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white" aria-labelledby="initiatives-heading">
         <div className="container mx-auto px-4 md:px-8">
-          <SectionHeading subtitle={t("sustainability.commit.subtitle")} title={t("sustainability.commit.title")} centered />
+          <div id="initiatives-heading">
+            <SectionHeading subtitle={t("sustainability.commit.subtitle")} title={t("sustainability.commit.title")} centered />
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 max-w-5xl mx-auto">
             <motion.div 

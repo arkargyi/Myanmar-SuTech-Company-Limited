@@ -37,18 +37,27 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen flex flex-col font-sans text-slate-800 bg-slate-50">
+      {/* Skip to Main Content */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-amber-500 focus:text-emerald-950 focus:font-bold focus:rounded-md focus:shadow-xl focus:outline-none"
+      >
+        Skip to main content
+      </a>
+
       {/* Top Bar */}
-      <div className="bg-emerald-900 text-white/80 py-2 px-4 md:px-8 text-xs md:text-sm hidden md:flex justify-between items-center z-50 relative">
+      <div className="bg-emerald-900 text-white/80 py-2 px-4 md:px-8 text-xs md:text-sm hidden md:flex justify-between items-center z-50 relative" role="complementary" aria-label="Contact information">
         <div className="flex items-center space-x-6">
-          <span className="flex items-center"><MapPin className="w-4 h-4 mr-2 text-amber-500" /> {t("topbar.locations")}</span>
-          <span className="flex items-center"><Phone className="w-4 h-4 mr-2 text-amber-500" /> +95 1 650 585</span>
+          <span className="flex items-center"><MapPin className="w-4 h-4 mr-2 text-amber-500" aria-hidden="true" /> {t("topbar.locations")}</span>
+          <span className="flex items-center"><Phone className="w-4 h-4 mr-2 text-amber-500" aria-hidden="true" /> +95 1 650 585</span>
         </div>
         <div className="flex items-center space-x-4">
-          <span className="flex items-center"><Mail className="w-4 h-4 mr-2 text-amber-500" /> info@myanmarsutech.com</span>
+          <span className="flex items-center"><Mail className="w-4 h-4 mr-2 text-amber-500" aria-hidden="true" /> info@myanmarsutech.com</span>
           <div className="flex space-x-2 border-l border-white/20 pl-4">
             <button 
               onClick={() => setLanguage('en')}
               className={cn("transition-colors font-medium", language === 'en' ? "text-amber-400" : "hover:text-white")}
+              aria-label="Switch to English"
             >
               EN
             </button>
@@ -56,6 +65,7 @@ export default function Layout() {
             <button 
               onClick={() => setLanguage('mm')}
               className={cn("transition-colors font-medium", language === 'mm' ? "text-amber-400" : "hover:text-white")}
+              aria-label="Switch to Myanmar language"
             >
               MM
             </button>
@@ -85,16 +95,17 @@ export default function Layout() {
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-xl leading-none text-emerald-900 tracking-tight">Myanmar Sutech</span>
-              <span className="text-[10px] uppercase tracking-widest text-slate-500 font-medium mt-1">Co., Ltd.</span>
+              <span className="text-[10px] uppercase tracking-widest text-slate-600 font-medium mt-1">Co., Ltd.</span>
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-8" aria-label="Primary Navigation">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
+                aria-current={location.pathname === link.path ? "page" : undefined}
                 className={cn(
                   "text-sm font-medium transition-colors hover:text-emerald-700 relative py-2",
                   location.pathname === link.path ? "text-emerald-800" : "text-slate-600"
@@ -123,14 +134,16 @@ export default function Layout() {
             <div className="flex space-x-2 border-r border-slate-200 pr-4 text-sm">
               <button 
                 onClick={() => setLanguage('en')}
-                className={cn("transition-colors font-medium", language === 'en' ? "text-emerald-700" : "text-slate-400 hover:text-slate-600")}
+                className={cn("transition-colors font-medium", language === 'en' ? "text-emerald-700" : "text-slate-600 hover:text-slate-800")}
+                aria-label="Switch to English"
               >
                 EN
               </button>
               <span className="text-slate-300">|</span>
               <button 
                 onClick={() => setLanguage('mm')}
-                className={cn("transition-colors font-medium", language === 'mm' ? "text-emerald-700" : "text-slate-400 hover:text-slate-600")}
+                className={cn("transition-colors font-medium", language === 'mm' ? "text-emerald-700" : "text-slate-600 hover:text-slate-800")}
+                aria-label="Switch to Myanmar language"
               >
                 MM
               </button>
@@ -138,6 +151,8 @@ export default function Layout() {
             <button
               className="p-2 text-slate-600 hover:text-emerald-800"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -175,7 +190,7 @@ export default function Layout() {
       </AnimatePresence>
 
       {/* Main Content */}
-      <main className="flex-grow flex flex-col">
+      <main id="main-content" className="flex-grow flex flex-col" tabIndex={-1}>
         <Outlet />
       </main>
 
@@ -206,29 +221,33 @@ export default function Layout() {
               </p>
             </div>
 
-            <div>
+            <div className="lg:col-span-1">
               <h4 className="text-white font-semibold mb-6 uppercase tracking-wider text-sm">{t("footer.quickLinks")}</h4>
-              <ul className="space-y-3">
-                {navLinks.map((link) => (
-                  <li key={link.name}>
-                    <Link to={link.path} className="text-sm hover:text-amber-400 transition-colors flex items-center group">
-                      <ChevronRight className="w-3 h-3 mr-2 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all text-amber-500" />
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <nav aria-label="Quick Links Footer">
+                <ul className="space-y-3">
+                  {navLinks.map((link) => (
+                    <li key={link.name}>
+                      <Link to={link.path} className="text-sm hover:text-amber-400 transition-colors flex items-center group">
+                        <ChevronRight className="w-3 h-3 mr-2 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all text-amber-500" aria-hidden="true" />
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             </div>
 
-            <div>
+            <div className="lg:col-span-1">
               <h4 className="text-white font-semibold mb-6 uppercase tracking-wider text-sm">{t("footer.ourBusiness")}</h4>
-              <ul className="space-y-3">
-                <li><Link to="/products" className="text-sm hover:text-amber-400 transition-colors">{t("footer.refinedSugar")}</Link></li>
-                <li><Link to="/products" className="text-sm hover:text-amber-400 transition-colors">{t("footer.byProducts")}</Link></li>
-                <li><Link to="/operations" className="text-sm hover:text-amber-400 transition-colors">{t("footer.prodProcess")}</Link></li>
-                <li><Link to="/products" className="text-sm hover:text-amber-400 transition-colors">{t("footer.qualityAssurance")}</Link></li>
-                <li><Link to="/sustainability" className="text-sm hover:text-amber-400 transition-colors">{t("footer.sustainability")}</Link></li>
-              </ul>
+              <nav aria-label="Business Navigation Footer">
+                <ul className="space-y-3">
+                  <li><Link to="/products" className="text-sm hover:text-amber-400 transition-colors">{t("footer.refinedSugar")}</Link></li>
+                  <li><Link to="/products" className="text-sm hover:text-amber-400 transition-colors">{t("footer.byProducts")}</Link></li>
+                  <li><Link to="/operations" className="text-sm hover:text-amber-400 transition-colors">{t("footer.prodProcess")}</Link></li>
+                  <li><Link to="/products" className="text-sm hover:text-amber-400 transition-colors">{t("footer.qualityAssurance")}</Link></li>
+                  <li><Link to="/sustainability" className="text-sm hover:text-amber-400 transition-colors">{t("footer.sustainability")}</Link></li>
+                </ul>
+              </nav>
             </div>
 
             <div>

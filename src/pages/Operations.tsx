@@ -45,9 +45,11 @@ export default function Operations() {
       </section>
 
       {/* Production Process */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white" aria-labelledby="process-heading">
         <div className="container mx-auto px-4 md:px-8">
-          <SectionHeading subtitle={t("operations.process.subtitle")} title={t("operations.process.title")} />
+          <div id="process-heading">
+            <SectionHeading subtitle={t("operations.process.subtitle")} title={t("operations.process.title")} />
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
             {[
@@ -63,8 +65,9 @@ export default function Operations() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 className="bg-slate-50 border border-slate-100 p-8 rounded-2xl relative overflow-hidden group hover:border-emerald-200 transition-colors"
+                aria-label={`Step ${item.step}: ${item.title}`}
               >
-                <div className="text-6xl font-black text-slate-100 absolute -top-4 -right-4 group-hover:text-emerald-50 transition-colors z-0">
+                <div className="text-6xl font-black text-slate-100 absolute -top-4 -right-4 group-hover:text-emerald-50 transition-colors z-0" aria-hidden="true">
                   {item.step}
                 </div>
                 <div className="relative z-10">
@@ -83,7 +86,7 @@ export default function Operations() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1 grid grid-cols-2 gap-4">
               <img loading="lazy" decoding="async" src="https://i.imgur.com/yi5WoHk.jpg" alt="Tech 1" className="rounded-xl h-48 md:h-64 w-full object-cover shadow-md" referrerPolicy="no-referrer" />
-              <img loading="lazy" decoding="async" src="https://i.imgur.com/cZpaH1E.jpg" alt="Tech 2" className="rounded-xl h-48 md:h-64 w-full object-cover shadow-md mt-8" referrerPolicy="no-referrer" />
+              <img loading="lazy" decoding="async" src="https://i.imgur.com/pzznhYp.jpg" alt="Tech 2" className="rounded-xl h-48 md:h-64 w-full object-cover shadow-md mt-8" referrerPolicy="no-referrer" />
             </div>
             <div className="order-1 lg:order-2">
               <SectionHeading subtitle={t("operations.tech.subtitle")} title={t("operations.tech.title")} />

@@ -1,18 +1,31 @@
 import { motion } from "motion/react";
 import { ArrowRight, Factory, Leaf, ShieldCheck, TrendingUp, Globe, Users, Quote } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import SectionHeading from "@/components/SectionHeading";
 import ImageGallery from "@/components/ImageGallery";
+import Skeleton from "@/components/Skeleton";
 import { useLanguage } from "@/lib/i18n";
 
 export default function Home() {
   const { t } = useLanguage();
+  const [isLoadingNews, setIsLoadingNews] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoadingNews(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="relative h-[90vh] min-h-[600px] flex items-center justify-center overflow-hidden">
+      <section 
+        className="relative h-[90vh] min-h-[600px] flex items-center justify-center overflow-hidden"
+        aria-label="Hero"
+      >
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
@@ -73,44 +86,54 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-white border-b border-slate-100 relative z-20 -mt-8 mx-4 md:mx-8 rounded-xl shadow-xl shadow-slate-200/50">
+      <section className="py-16 bg-white border-b border-slate-100 relative z-20 -mt-8 mx-4 md:mx-8 rounded-xl shadow-xl shadow-slate-200/50" aria-label="Key Statistics">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-slate-100">
             <div className="text-center px-4">
-              <div className="text-4xl md:text-5xl font-bold text-emerald-800 mb-2 font-mono">
+              <div className="text-4xl md:text-5xl font-bold text-emerald-800 mb-2 font-mono" aria-hidden="true">
                 <AnimatedCounter value={6000} />
               </div>
-              <p className="text-sm text-slate-500 font-medium uppercase tracking-wider">{t("home.stats.capacity")}</p>
+              <p className="text-sm text-slate-600 font-medium uppercase tracking-wider">
+                <span className="sr-only">Capacity: 6000 </span>{t("home.stats.capacity")}
+              </p>
             </div>
             <div className="text-center px-4">
-              <div className="text-4xl md:text-5xl font-bold text-emerald-800 mb-2 font-mono">
+              <div className="text-4xl md:text-5xl font-bold text-emerald-800 mb-2 font-mono" aria-hidden="true">
                 <AnimatedCounter value={1997} />
               </div>
-              <p className="text-sm text-slate-500 font-medium uppercase tracking-wider">{t("home.stats.established")}</p>
+              <p className="text-sm text-slate-600 font-medium uppercase tracking-wider">
+                <span className="sr-only">Established: 1997 </span>{t("home.stats.established")}
+              </p>
             </div>
             <div className="text-center px-4">
-              <div className="text-4xl md:text-5xl font-bold text-emerald-800 mb-2 font-mono">
+              <div className="text-4xl md:text-5xl font-bold text-emerald-800 mb-2 font-mono" aria-hidden="true">
                 <AnimatedCounter value={100} suffix="%" />
               </div>
-              <p className="text-sm text-slate-500 font-medium uppercase tracking-wider">{t("home.stats.quality")}</p>
+              <p className="text-sm text-slate-600 font-medium uppercase tracking-wider">
+                <span className="sr-only">Cane Sugar Quality: 100% </span>{t("home.stats.quality")}
+              </p>
             </div>
             <div className="text-center px-4">
-              <div className="text-4xl md:text-5xl font-bold text-emerald-800 mb-2 font-mono flex items-center justify-center">
-                <Globe className="w-8 h-8 mr-2 text-amber-500" />
+              <div className="text-4xl md:text-5xl font-bold text-emerald-800 mb-2 font-mono flex items-center justify-center" aria-hidden="true">
+                <Globe className="w-8 h-8 mr-2 text-amber-600" />
                 <span>{t("home.stats.global")}</span>
               </div>
-              <p className="text-sm text-slate-500 font-medium uppercase tracking-wider">{t("home.stats.export")}</p>
+              <p className="text-sm text-slate-600 font-medium uppercase tracking-wider">
+                <span className="sr-only">Export Markets: Global </span>{t("home.stats.export")}
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Intro Section */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-slate-50" aria-labelledby="intro-heading">
         <div className="container mx-auto px-4 md:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <SectionHeading subtitle={t("home.intro.subtitle")} title={t("home.intro.title")} />
+              <div id="intro-heading">
+                <SectionHeading subtitle={t("home.intro.subtitle")} title={t("home.intro.title")} />
+              </div>
               <p className="text-slate-600 text-lg leading-relaxed mb-6">
                 {t("home.intro.p1")}
               </p>
@@ -119,6 +142,7 @@ export default function Home() {
               </p>
               <Link 
                 to="/about" 
+                aria-label="Read more about Myanmar Sutech"
                 className="inline-flex items-center font-bold text-emerald-700 hover:text-emerald-800 transition-colors group"
               >
                 {t("home.intro.readMore")}
@@ -198,6 +222,7 @@ export default function Home() {
                   <p className="text-slate-600 mb-6 flex-grow">{item.desc}</p>
                   <Link 
                     to={item.link} 
+                    aria-label={`Learn more about ${item.title}`}
                     className="inline-flex items-center text-sm font-bold text-emerald-700 hover:text-amber-500 transition-colors uppercase tracking-wider"
                   >
                     {t("home.pillars.learnMore")} <ArrowRight className="w-4 h-4 ml-2" />
@@ -223,77 +248,91 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                id: 1,
-                title: t("news.articles.a1.title"),
-                excerpt: t("news.articles.a1.excerpt"),
-                date: t("news.articles.a1.date"),
-                category: t("news.articles.a1.category"),
-                image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop"
-              },
-              {
-                id: 2,
-                title: t("news.articles.a2.title"),
-                excerpt: t("news.articles.a2.excerpt"),
-                date: t("news.articles.a2.date"),
-                category: t("news.articles.a2.category"),
-                image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800&auto=format&fit=crop"
-              },
-              {
-                id: 3,
-                title: t("news.articles.a3.title"),
-                excerpt: t("news.articles.a3.excerpt"),
-                date: t("news.articles.a3.date"),
-                category: t("news.articles.a3.category"),
-                image: "https://images.unsplash.com/photo-1622484211148-7182928d11ce?q=80&w=800&auto=format&fit=crop"
-              }
-            ].map((article, index) => (
-              <motion.article
-                key={article.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="bg-slate-50 rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl hover:border-emerald-100 transition-all duration-300 group flex flex-col h-full"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={article.image} 
-                    alt={article.title} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-emerald-800 shadow-sm">
-                    {article.category}
+            {isLoadingNews ? (
+              Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 flex flex-col h-full animate-pulse">
+                  <div className="h-48 bg-slate-200" />
+                  <div className="p-6 flex flex-col flex-grow">
+                    <div className="w-24 h-4 bg-slate-200 rounded mb-4" />
+                    <div className="w-full h-6 bg-slate-200 rounded mb-3" />
+                    <div className="w-full h-4 bg-slate-200 rounded mb-2" />
+                    <div className="w-2/3 h-4 bg-slate-200 rounded mt-auto" />
                   </div>
                 </div>
-                
-                <div className="p-6 flex flex-col flex-grow">
-                  <div className="flex items-center text-slate-500 text-xs mb-4 font-medium">
-                    <span className="w-4 h-4 mr-2 text-emerald-600">📅</span>
-                    {article.date}
+              ))
+            ) : (
+              [
+                {
+                  id: 1,
+                  title: t("news.articles.a1.title"),
+                  excerpt: t("news.articles.a1.excerpt"),
+                  date: t("news.articles.a1.date"),
+                  category: t("news.articles.a1.category"),
+                  image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop"
+                },
+                {
+                  id: 2,
+                  title: t("news.articles.a2.title"),
+                  excerpt: t("news.articles.a2.excerpt"),
+                  date: t("news.articles.a2.date"),
+                  category: t("news.articles.a2.category"),
+                  image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800&auto=format&fit=crop"
+                },
+                {
+                  id: 3,
+                  title: t("news.articles.a3.title"),
+                  excerpt: t("news.articles.a3.excerpt"),
+                  date: t("news.articles.a3.date"),
+                  category: t("news.articles.a3.category"),
+                  image: "https://images.unsplash.com/photo-1622484211148-7182928d11ce?q=80&w=800&auto=format&fit=crop"
+                }
+              ].map((article, index) => (
+                <motion.article
+                  key={article.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  className="bg-slate-50 rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl hover:border-emerald-100 transition-all duration-300 group flex flex-col h-full"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <img 
+                      src={article.image} 
+                      alt={article.title} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-emerald-800 shadow-sm">
+                      {article.category}
+                    </div>
                   </div>
                   
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-emerald-700 transition-colors line-clamp-2">
-                    {article.title}
-                  </h3>
-                  
-                  <p className="text-slate-600 text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
-                    {article.excerpt}
-                  </p>
-                  
-                  <Link to="/news" state={{ articleId: article.id }} className="flex items-center text-emerald-700 font-semibold text-sm hover:text-emerald-800 transition-colors mt-auto group/btn">
-                    {t("news.readMore")}
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                  </Link>
-                </div>
-              </motion.article>
-            ))}
+                  <div className="p-6 flex flex-col flex-grow">
+                    <div className="flex items-center text-slate-600 text-xs mb-4 font-medium">
+                      <span className="w-4 h-4 mr-2 text-emerald-600">📅</span>
+                      {article.date}
+                    </div>
+                    
+                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-emerald-700 transition-colors line-clamp-2">
+                      {article.title}
+                    </h3>
+                    
+                    <p className="text-slate-600 text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
+                      {article.excerpt}
+                    </p>
+                    
+                    <Link to="/news" state={{ articleId: article.id }} aria-label={`Read more about ${article.title}`} className="flex items-center text-emerald-700 font-semibold text-sm hover:text-emerald-800 transition-colors mt-auto group/btn">
+                      {t("news.readMore")}
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                    </Link>
+                  </div>
+                </motion.article>
+              ))
+            )}
           </div>
           
           <div className="mt-8 text-center md:hidden">
-            <Link to="/news" className="inline-flex items-center text-emerald-700 font-bold hover:text-amber-500 transition-colors">
+            <Link to="/news" aria-label="View all news" className="inline-flex items-center text-emerald-700 font-bold hover:text-amber-500 transition-colors">
               {t("news.readMore")} <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
           </div>
@@ -328,7 +367,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-slate-50" aria-label="Testimonials">
         <div className="container mx-auto px-4 md:px-8">
           <SectionHeading subtitle={t("home.testimonials.subtitle")} title={t("home.testimonials.title")} centered />
           
@@ -358,17 +397,19 @@ export default function Home() {
                 transition={{ delay: index * 0.1 }}
                 className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 relative flex flex-col"
               >
-                <Quote className="w-10 h-10 text-emerald-100 absolute top-6 left-6" />
-                <p className="text-slate-600 italic relative z-10 mt-6 mb-8 flex-grow">
-                  "{testimonial.quote}"
-                </p>
+                <Quote className="w-10 h-10 text-emerald-100 absolute top-6 left-6" aria-hidden="true" />
+                <blockquote className="relative z-10 mt-6 mb-8 flex-grow">
+                  <p className="text-slate-600 italic">
+                    "{testimonial.quote}"
+                  </p>
+                </blockquote>
                 <div className="flex items-center mt-auto">
-                  <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-800 font-bold text-lg mr-4">
+                  <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-800 font-bold text-lg mr-4" aria-hidden="true">
                     {testimonial.name.charAt(0)}
                   </div>
                   <div>
                     <h4 className="font-bold text-slate-800">{testimonial.name}</h4>
-                    <p className="text-sm text-slate-500">{testimonial.role}</p>
+                    <p className="text-sm text-slate-600">{testimonial.role}</p>
                   </div>
                 </div>
               </motion.div>
